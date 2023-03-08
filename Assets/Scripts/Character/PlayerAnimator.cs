@@ -16,4 +16,14 @@ public class PlayerAnimator : MonoBehaviour
     {
           _animator.SetFloat("IsMove", speed);
     }
+
+    public void CuttingAnimation()
+    {
+        _animator.SetBool("Cutting", true);
+    }
+
+    public void StopCuttingAnimation()
+    {
+         _animator.SetBool("Cutting", false);
+    }
 }

@@ -3,12 +3,15 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(PlayerAnimator))]
+[RequireComponent(typeof(PlayerCutting))]
+[RequireComponent(typeof(PlayerBlockStack))]
 public class PlayerMovement : MonoBehaviour
 {
 
     [Header("Settings")] 
     [SerializeField] private float _playerSpeed;
     [SerializeField] private float _rotationSpeed;
+    
 
     private const string HorizontalAxis = "Horizontal";
     private const string VerticalAxis = "Vertical";   
@@ -19,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDead;
 
     private void Start()
-    {
+    {       
       _animator = GetComponent<PlayerAnimator>();
         _nav = GetComponent<NavMeshAgent>();  
     }
@@ -50,5 +53,7 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion.LookRotation(lookDirection), _rotationSpeed * Time.fixedDeltaTime);
         }
     }
+
+   
 
 }

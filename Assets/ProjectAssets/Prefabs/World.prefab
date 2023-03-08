@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c72c6bdd335b8042973f4d8dd84424f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grassPrefabs:
-  - {fileID: 1636262058372710, guid: 5860ea14cc59297489223425de119e3c, type: 3}
-  grassNumber: 250
-  groundPlace: {fileID: 0}
-  interactionTag: Player
+  _grassPrefabs:
+  - {fileID: 4355197091694618660, guid: 2aa93eb3d14fd5149b199fa7eea1b141, type: 3}
+  _grassNumber: 64
+  _width: 0
+  _depth: 0

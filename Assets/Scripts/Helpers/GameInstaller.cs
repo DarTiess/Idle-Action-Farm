@@ -7,6 +7,7 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private LevelEventService _levelEventService;
     [SerializeField] private CanvasControl _canvasController;
     [SerializeField] private PlayerMovement _player;
+   [SerializeField] private PlayerBlockStack _playerblockStack;
    
 
     public override void InstallBindings()
@@ -14,9 +15,9 @@ public class GameInstaller : MonoInstaller
         BindLevelManager();
         BindCanvasController();        
         BindPlayer();    
+        BindBlockStack();
     }
-
-  
+       
     private void BindLevelManager()
     {
         Container.Bind<LevelEventService>().FromInstance(_levelEventService).AsSingle();
@@ -31,5 +32,8 @@ public class GameInstaller : MonoInstaller
         Container.Bind<PlayerMovement>().FromInstance(_player).AsSingle();
     }
   
-
+     private void BindBlockStack()
+    {
+       Container.Bind<PlayerBlockStack>().FromInstance(_playerblockStack).AsSingle();
+    }
 }
