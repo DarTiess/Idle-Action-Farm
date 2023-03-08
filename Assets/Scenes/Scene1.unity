@@ -1106,7 +1106,7 @@ PrefabInstance:
     - target: {fileID: 5306763732610572282, guid: d39cd0df7d1bf0448880280295620d28,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5306763732610572286, guid: d39cd0df7d1bf0448880280295620d28,
         type: 3}
@@ -1824,20 +1824,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 974949971777042275, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
+    - target: {fileID: 1654369975572612660, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
         type: 3}
-      propertyPath: _cutCount
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 974949971777042275, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
-        type: 3}
-      propertyPath: _jumpForce
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 974949971777042275, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
-        type: 3}
-      propertyPath: _blockHeight
-      value: 0.7
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1743217554659129781, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
         type: 3}
@@ -1898,6 +1888,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3344625284010232742, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137693501928186080, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9a7eb2e60f5f364ca7bbb32467f2f6d, type: 3}

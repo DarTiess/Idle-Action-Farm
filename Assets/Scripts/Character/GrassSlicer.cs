@@ -10,12 +10,12 @@ public class GrassSlicer : MonoBehaviour
 
     private CapsuleCollider _collider;
    private GameObject _source;
- 
+ private GrassGrounding _grassGrounding;
   
     private void Start()
     {
         _collider= GetComponent<CapsuleCollider>();
-        
+        _grassGrounding= GetComponent<GrassGrounding>();
         PrepareSlicer();
     }
     public  void PrepareSlicer() {
@@ -53,8 +53,10 @@ public class GrassSlicer : MonoBehaviour
           GameObject lowerObj=  hull.CreateLowerHull(_source, _crossMat);
           GameObject upperObj=  hull.CreateUpperHull(_source, _crossMat);
 
-           upperObj.AddComponent<MeshCollider>().convex=true;           
-
+            lowerObj.AddComponent<GrassPart>().Dissapearing(2f, _grassGrounding);
+                  
+            upperObj.AddComponent<GrassPart>().Dissapearing(2f, _grassGrounding);
+            upperObj.AddComponent<MeshCollider>().convex=true;    
           Rigidbody rbUpper=  upperObj.AddComponent<Rigidbody>();
             rbUpper.constraints=RigidbodyConstraints.FreezePositionZ;
 

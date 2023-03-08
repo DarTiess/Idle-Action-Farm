@@ -4,19 +4,15 @@ using Zenject;
 
 public class GrassController : MonoBehaviour
  {
-       
-   [SerializeField]private List<GameObject> _grassPrefabs;
-    [SerializeField]private int _grassNumber = 64;
-   
-   [SerializeField]private float _width;
-    [SerializeField]private float _depth;
-   
 
-  
+    [SerializeField] private List<GameObject> _grassPrefabs;
+    [SerializeField] private int _grassNumber = 64;
+    [SerializeField] private float _width;
+    [SerializeField] private float _depth;
+
     private Transform _ground;
     private List<GameObject> _grass = new List<GameObject>();
-    private int _indexGrass=0;
-    
+
     void Start()
     {
         _ground = transform;
@@ -36,16 +32,6 @@ public class GrassController : MonoBehaviour
     }
 
 
-    public void CutGrass()
-    {
-        _indexGrass++;
-        if (_indexGrass >= _grass.Count)
-        {
-            //make block
-        }
-    }
-
-   
    /* private void Update() {
         int interactionObjIndex = 0;
         foreach (GameObject interactionObj in GameObject.FindGameObjectsWithTag(interactionTag)) {
