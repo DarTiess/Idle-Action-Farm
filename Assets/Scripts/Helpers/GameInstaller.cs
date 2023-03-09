@@ -8,6 +8,7 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private CanvasControl _canvasController;
     [SerializeField] private PlayerMovement _player;
    [SerializeField] private PlayerBlockStack _playerblockStack;
+   [SerializeField] private Economics _economics;
    
 
     public override void InstallBindings()
@@ -16,8 +17,9 @@ public class GameInstaller : MonoInstaller
         BindCanvasController();        
         BindPlayer();    
         BindBlockStack();
+        BindEconimics();
     }
-       
+
     private void BindLevelManager()
     {
         Container.Bind<LevelEventService>().FromInstance(_levelEventService).AsSingle();
@@ -35,5 +37,10 @@ public class GameInstaller : MonoInstaller
      private void BindBlockStack()
     {
        Container.Bind<PlayerBlockStack>().FromInstance(_playerblockStack).AsSingle();
+    }
+    
+    private void BindEconimics()
+    {
+        Container.Bind<Economics>().FromInstance(_economics).AsSingle();
     }
 }

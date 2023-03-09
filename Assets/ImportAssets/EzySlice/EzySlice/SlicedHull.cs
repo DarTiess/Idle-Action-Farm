@@ -27,7 +27,7 @@ namespace EzySlice {
             if (newObject != null) {
                 newObject.transform.position = original.transform.position;
                 newObject.transform.localRotation = original.transform.localRotation;
-                newObject.transform.localScale = original.transform.localScale/2;
+                newObject.transform.localScale = original.transform.localScale/3;
 
                 Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
@@ -66,7 +66,7 @@ namespace EzySlice {
             if (newObject != null) {
                 newObject.transform.position = original.transform.position;
                 newObject.transform.rotation = original.transform.rotation;
-                newObject.transform.localScale = original.transform.localScale/2;
+                newObject.transform.localScale = original.transform.localScale/3;
 
                 Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;

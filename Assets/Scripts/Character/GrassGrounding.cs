@@ -36,6 +36,7 @@ public class GrassGrounding : MonoBehaviour
 
                 _slicer.enabled = true;
                 _plane.gameObject.SetActive(true);
+                transform.DOKill();
             });
     }
 

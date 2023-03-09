@@ -16,13 +16,13 @@ public class Block : MonoBehaviour
     {
         
     }
-    public void MoveToTarget(Vector3 startPlace, Vector3 target, float jumpForce, float jumpDuretion)
+    public void MoveToTarget(Vector3 startPlace, Transform target, float jumpForce, float jumpDuretion)
     {
         transform.position=startPlace;
-          transform.DOJump(target, jumpForce, 1, jumpDuretion)
+          transform.DOJump(target.position, jumpForce, 1, jumpDuretion)
         .OnComplete(() =>
         {
-            transform.position =target;
+            transform.position =target.position;
              transform.tag="Block";
         });
     }
