@@ -18,62 +18,67 @@ public class PlayerBlockStack : MonoBehaviour
     [SerializeField] private float _jumpDuretion;
     [SerializeField] private float _blockHeight;
     [SerializeField] private int _limitOfBlocks;
-  /*    [SerializeField] private float _timeMagnet;
-    [SerializeField] private int _countSteepMagnet;
-    [SerializeField] private AnimationCurve _changeY;
-    private float _steep;
-    private float _timeInSteep;*/
 
-    private int _blockIndex=0;
-    private float _cutIndex=0;
+
+    private int _blockIndex = 0;
+    private float _cutIndex = 0;
     private float _startBlockPosition;
-    private List<Block> _blocks= new List<Block>();
-    private List<Block> _blocksInStack= new List<Block>();
-
+    private List<Block> _blocks = new List<Block>();
+    private List<Block> _blocksInStack = new List<Block>();
+    private bool _onSaling;
+    private bool _isFullingStack;
+    private PlayerMoneyStack _moneyStack;
     private Economics _economics;
 
     [Inject]
     private void Construct(Economics economics)
     {
-        _economics= economics;
+        _economics = economics;
     }
 
     private void Start()
     {
-        //_startBlockPosition=_blockPlace.position.y;
-      //       _steep = 1f / _countSteepMagnet;
-      //  _timeInSteep = _timeMagnet / _countSteepMagnet;
-
-        _economics.MaxBlockSize=_limitOfBlocks;
+        _moneyStack=GetComponent<PlayerMoneyStack>();
+        _economics.MaxBlockSize = _limitOfBlocks;
+        _moneyStack.CreateCoinsPull(_limitOfBlocks);
         CreateBlocksPull();
     }
 
     private void CreateBlocksPull()
     {
-        for(int i = 0; i < _limitOfBlocks; i++)
+        for (int i = 0; i < _limitOfBlocks; i++)
         {
-              Block block = Instantiate(_blockPrefab,transform.position, transform.rotation);
-             block.gameObject.SetActive(false);
+            Block block = Instantiate(_blockPrefab, transform.position, transform.rotation);
+            block.gameObject.SetActive(false);
             _blocks.Add(block);
-           
+
         }
     }
 
     private void OnTriggerEnter(Collider other)
-    {       
+    {
         if (other.gameObject.CompareTag("Block"))
         {
             StackBlocks(other.gameObject.GetComponent<Block>());
         }
+      
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         if (other.gameObject.CompareTag("StoreHouse"))
         {
-            Debug.Log("Storing blocks");
+            if (!_onSaling)
+            {
+                SaleBlocks(other.gameObject.transform);
+            }
+
         }
     }
 
     public void CreateBlockOfGrass(Transform grass)
     {
-          if (_blockIndex >= _limitOfBlocks)
+        if (_blockIndex >= _limitOfBlocks)
         {
             return;
         }
@@ -82,40 +87,80 @@ public class PlayerBlockStack : MonoBehaviour
         {
             return;
         }
-      
-      _blocks[_blockIndex].gameObject.SetActive(true);
-     
-        int rnd= UnityEngine.Random.Range(-1,1);
-        if(rnd == 0)
+        foreach (Block block in _blocks)
         {
-            rnd=1;
+            if (!block.gameObject.activeInHierarchy)
+            {
+                block.gameObject.SetActive(true);
+
+                int rnd = UnityEngine.Random.Range(-1, 1);
+                if (rnd == 0)
+                {
+                    rnd = 1;
+                }
+                float zPos = gameObject.transform.position.z + 3 * rnd;
+
+                block.transform.tag = "Block";
+               block.MoveToTarget(grass.position, grass, _jumpForce, _jumpDuretion);
+
+                _cutIndex = 0;
+                return;
+            }
         }
-        float zPos= gameObject.transform.position.z + 3 * rnd;
-     
-         _blocks[_blockIndex].transform.tag="Block";
-        _blocks[_blockIndex].MoveToTarget(grass.position,grass, _jumpForce, _jumpDuretion);
-        
-     // _blocksInStack[_blockIndex].PushingBlock(grass, _countSteepMagnet, _steep, _changeY,_timeInSteep);
-        _cutIndex = 0;
-      _blockIndex++;
-      
-         if (_blockIndex >= _limitOfBlocks)
-        {
-           IsFull?.Invoke();
-        }
+   
     }
 
     private void StackBlocks(Block block)
-    { 
+    {
         _blocksInStack.Add(block);
-        block.tag="Untagged";
-      
-       
-        block.MoveToTarget(block.transform.position,_blockPlace, _jumpForce, _jumpDuretion);
+        block.tag = "Untagged";
+
+
+        block.MoveToTarget(block.transform.position, _blockPlace, _jumpForce, _jumpDuretion);
         _economics.GetBlock(1);
-     //   block.PushingBlock(_blockPlace, _countSteepMagnet, _steep, _changeY,_timeInSteep);
+
         block.transform.parent = _blockPlace.transform.parent;
-           _startBlockPosition+=_blockHeight;
-        _blockPlace.position +=new Vector3(0,_startBlockPosition,0);
+        _startBlockPosition += _blockHeight;
+       _blockPlace.transform.position= new Vector3(_blockPlace.position.x, _startBlockPosition, _blockPlace.position.z);
+       
+        _blockIndex++;
+
+        if (_blockIndex >= _limitOfBlocks)
+        {
+            _isFullingStack= true;
+            IsFull?.Invoke();
+        }
     }
+    private void SaleBlocks(Transform storeHouse)
+    {
+        if (_blockIndex <= 0)
+        {
+            return;
+        }
+        _onSaling = true;
+        Debug.Log("Storing blocks");
+        Block lastBlock = _blocksInStack[_blockIndex - 1];
+
+        lastBlock.transform.DOJump(storeHouse.position, _jumpForce, 1, _jumpDuretion)
+        .OnComplete(() =>
+        {
+            _onSaling = false;
+            _moneyStack.PushCoinsToBank(storeHouse);
+            lastBlock.transform.parent = null;
+            lastBlock.transform.position = storeHouse.position;
+            lastBlock.gameObject.SetActive(false);
+            _blocksInStack.Remove(lastBlock);
+
+            _blockIndex--;
+            _startBlockPosition -= _blockHeight;
+            _blockPlace.transform.position = new Vector3(_blockPlace.position.x, _startBlockPosition, _blockPlace.position.z);
+            if (_isFullingStack)
+            {
+                _isFullingStack = false;
+                CanStacking?.Invoke();
+            }
+        });
+
+    }
+
 }

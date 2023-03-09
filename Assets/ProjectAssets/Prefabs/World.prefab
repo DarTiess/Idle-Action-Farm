@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4371725473746944015}
   - component: {fileID: 4371725473746944014}
   - component: {fileID: 4371725473746944013}
+  - component: {fileID: 4903800424722915608}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4371725473746944009}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.00026454666, y: -0.008019379, z: -0.033224702}
-  m_LocalScale: {x: 0.15524183, y: 0.12419346, z: 0.12419346}
+  m_LocalScale: {x: 0.3202639, y: 0.2562111, z: 0.2562111}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -40,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4371725473746944009}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 3579006905215321840, guid: cd52eeac6214d4f3cb8efb56c0d39006, type: 3}
 --- !u!23 &4371725473746944014
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96,6 +97,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _grassPrefabs:
   - {fileID: 4355197091694618660, guid: 2aa93eb3d14fd5149b199fa7eea1b141, type: 3}
-  _grassNumber: 64
-  _width: 0
-  _depth: 0
+  _grassNumber: 150
+  _width: 4
+  _depth: 4
+--- !u!65 &4903800424722915608
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371725473746944009}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.1553893, y: 1.72, z: 5.065426}
+  m_Center: {x: 0.020079957, y: -0.0000000050110036, z: -0.11873032}

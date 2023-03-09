@@ -25,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5306763732610572282}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.0482957, y: 0.012001, z: 1.3129208}
-  m_LocalScale: {x: 1.4965, y: 1.4965, z: 1.4965}
+  m_LocalScale: {x: 0.36980116, y: 0.36980116, z: 0.36980116}
   m_Children:
   - {fileID: 5306763732422587021}
   m_Father: {fileID: 0}
@@ -102,12 +102,12 @@ PrefabInstance:
     - target: {fileID: 4371725473746944012, guid: d1700f26f2295104e910b04b9cc64b58,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00026454666
+      value: 0.00026458
       objectReference: {fileID: 0}
     - target: {fileID: 4371725473746944012, guid: d1700f26f2295104e910b04b9cc64b58,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.008019379
+      value: -0.037051
       objectReference: {fileID: 0}
     - target: {fileID: 4371725473746944012, guid: d1700f26f2295104e910b04b9cc64b58,
         type: 3}
@@ -149,77 +149,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: width
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: _depth
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: _width
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: height
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: grassNumber
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: groundPlace
-      value: 
-      objectReference: {fileID: 5306763732610572282}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: _grassPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: grassPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 4355197091694618660, guid: 2aa93eb3d14fd5149b199fa7eea1b141,
-        type: 3}
-    - target: {fileID: 4371725473746944013, guid: d1700f26f2295104e910b04b9cc64b58,
-        type: 3}
-      propertyPath: _grassPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 4355197091694618660, guid: 2aa93eb3d14fd5149b199fa7eea1b141,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1700f26f2295104e910b04b9cc64b58, type: 3}
---- !u!1 &5306763732422587016 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4371725473746944009, guid: d1700f26f2295104e910b04b9cc64b58,
-    type: 3}
-  m_PrefabInstance: {fileID: 8434701522042876545}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5306763732422587021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4371725473746944012, guid: d1700f26f2295104e910b04b9cc64b58,
     type: 3}
   m_PrefabInstance: {fileID: 8434701522042876545}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &4903800424722915608
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5306763732422587016}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10.1, y: 2.220446e-16, z: 10}
-  m_Center: {x: -0.00000047683716, y: -0.0000000050110036, z: 0}

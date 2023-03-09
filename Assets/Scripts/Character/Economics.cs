@@ -10,7 +10,10 @@ public class Economics : MonoBehaviour
     [SerializeField] private Text _money;
     [SerializeField] private Text _block;
     [SerializeField] private Text _blockMax;
-  private int _blockMaxSize;
+ [SerializeField]private float _speedDuration;
+
+    [Header("Blocks salle's settings")]
+    [SerializeField]private int _blockPrice;
     public int MaxBlockSize
     {
         get{ return _blockMaxSize;}
@@ -19,6 +22,10 @@ public class Economics : MonoBehaviour
             _blockMaxSize= value;
             _blockMax.text="/"+_blockMaxSize.ToString();
         }
+    }
+    public Text MoneyText
+    {
+        get { return _money; }
     }
     public int Money
     {
@@ -30,78 +37,54 @@ public class Economics : MonoBehaviour
         get { return PlayerPrefs.GetInt("Block"); ; }
         set { PlayerPrefs.SetInt("Block", value); }
     }
-
+ private int _blockMaxSize;
     private void Start()
     {
         _money.text = Money.ToString();
         _block.text = Block.ToString();
        
     }
-
-    public void GetMoney(int count)
-    {
-        int result = Money + count;
-
-        _money.DOCounter(Money, result, 0.5f)
-            .OnPlay(() =>
-            {
-                _money.transform.DOScale(1.5f, 0.5f)
-                .OnComplete(() =>
-                {
-                    _money.transform.DOScale(1, 0.5f);
-                });
-            })
-            .OnComplete(() =>
-            {
-                Money += count;
-            });
-      
-    }
+     
     public void GetBlock(int count)
     {
         int result = Block + count;
 
-        _block.DOCounter(Block, result, 0.5f)
+        _block.DOCounter(Block, result, _speedDuration)
             .OnPlay(() =>
             {
-                _block.transform.DOScale(1.5f, 0.5f)
+                _block.transform.DOScale(1.5f, _speedDuration)
                 .OnComplete(() =>
                 {
-                    _block.transform.DOScale(1, 0.5f);
+                    _block.transform.DOScale(1, _speedDuration);
                 });
             })
             .OnComplete(() =>
             {
                 Block += count;
             });
-
     }
 
-    public void BuyCoins()
+    public void BuyCoins(int blockNum)
     {
-        if (Block >= 10)
-        {
-            int resultBlocks = Block % 10;
-            int looseBlock = Block - resultBlocks;
-            int addMoney = looseBlock / 2;
-            int resultMoney = Money + addMoney;
+        if(Block<=0) return;
+        int restBlock = Block - blockNum;
+        int resultMoney = Money + _blockPrice;
 
-            _money.DOCounter(Money, resultMoney, 0.5f)
-          .OnPlay(() =>
-          {
-              _money.transform.DOScale(1.5f, 0.5f)
-              .OnComplete(() =>
-              {
-                  _money.transform.DOScale(1, 0.5f);
-              });
-              _block.DOCounter(Block, resultBlocks, 0.5f);
-          })
+        _money.DOCounter(Money, resultMoney, _speedDuration)
+      .OnPlay(() =>
+      {
+          _money.transform.DOScale(1.5f, _speedDuration)
           .OnComplete(() =>
           {
-              Money = resultMoney;
-              Block = resultBlocks;
+              _money.transform.DOScale(1, _speedDuration);
           });
+          _block.DOCounter(Block, restBlock, _speedDuration);
+      })
+      .OnComplete(() =>
+      {
+          Money = resultMoney;
+          Block = restBlock;
+      });
 
-        }
     }
 }

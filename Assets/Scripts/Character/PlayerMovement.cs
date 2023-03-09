@@ -5,6 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(PlayerAnimator))]
 [RequireComponent(typeof(PlayerCutting))]
 [RequireComponent(typeof(PlayerBlockStack))]
+[RequireComponent(typeof(PlayerMoneyStack))]
 public class PlayerMovement : MonoBehaviour
 {
 
