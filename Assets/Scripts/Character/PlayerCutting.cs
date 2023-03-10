@@ -1,13 +1,9 @@
-using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCutting : MonoBehaviour
 {
-    [SerializeField]private GameObject _melee;
- 
+    [SerializeField] private GameObject _melee;
+
     private PlayerAnimator _animator;
     private PlayerBlockStack _blockStack;
     private bool _isFull;
@@ -18,7 +14,7 @@ public class PlayerCutting : MonoBehaviour
         _melee.SetActive(false);
         _animator = GetComponent<PlayerAnimator>();
         _blockStack.IsFull += IsFull;
-        _blockStack.CanStacking+=ContinueCutting;
+        _blockStack.CanStacking += ContinueCutting;
     }
 
     private void OnDisable()
@@ -35,9 +31,7 @@ public class PlayerCutting : MonoBehaviour
                 _animator.CuttingAnimation();
                 _melee.SetActive(true);
             }
-
         }
-
     }
     private void OnTriggerExit(Collider other)
     {
@@ -51,9 +45,9 @@ public class PlayerCutting : MonoBehaviour
         _isFull = true;
         StopCutting();
     }
-     private void ContinueCutting()
+    private void ContinueCutting()
     {
-      _isFull= false;
+        _isFull = false;
     }
 
     private void StopCutting()
@@ -61,5 +55,4 @@ public class PlayerCutting : MonoBehaviour
         _melee.SetActive(false);
         _animator.StopCuttingAnimation();
     }
-
 }

@@ -7,13 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Main.unity
-    guid: 2485d0c66b575804194698d3f115c714
+    guid: baf1b412e03e38443b9ff826a1e5148a
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: a879a1c4857a7f947999e8de9e2eb71d
-  - enabled: 1
-    path: Assets/Scenes/Level2.unity
-    guid: cdf2130fc1f23434face6c7bacb13cb3
+    path: Assets/Scenes/Scene1.unity
+    guid: 8c30af86745898c47a2683e556d02b2b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c9f7cb4cb25416341b75161040e8eb6e,
       type: 2}

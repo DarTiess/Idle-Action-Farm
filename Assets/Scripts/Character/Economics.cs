@@ -1,26 +1,24 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Economics : MonoBehaviour
 {
-   [Header("InGame Menu")]
+    [Header("InGame Menu")]
     [SerializeField] private Text _money;
     [SerializeField] private Text _block;
     [SerializeField] private Text _blockMax;
- [SerializeField]private float _speedDuration;
+    [SerializeField] private float _speedDuration;
 
     [Header("Blocks salle's settings")]
-    [SerializeField]private int _blockPrice;
+    [SerializeField] private int _blockPrice;
     public int MaxBlockSize
     {
-        get{ return _blockMaxSize;}
+        get { return _blockMaxSize; }
         set
         {
-            _blockMaxSize= value;
-            _blockMax.text="/"+_blockMaxSize.ToString();
+            _blockMaxSize = value;
+            _blockMax.text = "/" + _blockMaxSize.ToString();
         }
     }
     public Text MoneyText
@@ -37,14 +35,15 @@ public class Economics : MonoBehaviour
         get { return PlayerPrefs.GetInt("Block"); ; }
         set { PlayerPrefs.SetInt("Block", value); }
     }
- private int _blockMaxSize;
+
+    private int _blockMaxSize;
     private void Start()
     {
+        Block = 0;
         _money.text = Money.ToString();
         _block.text = Block.ToString();
-       
     }
-     
+
     public void GetBlock(int count)
     {
         int result = Block + count;
@@ -66,7 +65,7 @@ public class Economics : MonoBehaviour
 
     public void BuyCoins(int blockNum)
     {
-        if(Block<=0) return;
+        if (Block <= 0) return;
         int restBlock = Block - blockNum;
         int resultMoney = Money + _blockPrice;
 

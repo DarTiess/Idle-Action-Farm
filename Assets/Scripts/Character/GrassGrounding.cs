@@ -1,28 +1,23 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrassGrounding : MonoBehaviour
 {
-    [SerializeField]private float _maxSize;
-    [SerializeField]private float _growDuration;
-   
+    [SerializeField] private float _maxSize;
+    [SerializeField] private float _growDuration;
     [SerializeField] private GrassPlane _plane;
 
     private float _startSize;
-     private GrassSlicer _slicer;
+    private GrassSlicer _slicer;
     private CapsuleCollider _collider;
     // Start is called before the first frame update
     void Start()
     {
-        _startSize=gameObject.transform.localScale.y;        
-        _collider= GetComponent<CapsuleCollider>();
-        _slicer=GetComponent<GrassSlicer>();         
+        _startSize = gameObject.transform.localScale.y;
+        _collider = GetComponent<CapsuleCollider>();
+        _slicer = GetComponent<GrassSlicer>();
         GroundingGrass();
     }
-
-  
     private void GroundingGrass()
     {
         _collider.enabled = false;
@@ -42,7 +37,7 @@ public class GrassGrounding : MonoBehaviour
 
     public void StartGroundAgain()
     {
-        gameObject.transform.localScale=new Vector3(gameObject.transform.localScale.x, _startSize, gameObject.transform.localScale.z);
+        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, _startSize, gameObject.transform.localScale.z);
 
         GroundingGrass();
     }

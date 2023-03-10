@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
-using DG.Tweening;
-using System;
 
 public class CanvasControl : MonoBehaviour
 {
@@ -14,19 +11,13 @@ public class CanvasControl : MonoBehaviour
     [SerializeField] private CanvasGroup _panelWin;
     [SerializeField] private CanvasGroup _panelLost;
     [SerializeField] private CanvasGroup _panelHeader;
-   
-  
-
 
     private List<CanvasGroup> _canvasGroupes = new List<CanvasGroup>();
-
     private LevelEventService _levelManager;
- 
-
     [Inject]
-    void Initialization(LevelEventService LevelManager)
+    void Construct(LevelEventService LevelManager)
     {
-        _levelManager = LevelManager;      
+        _levelManager = LevelManager;
     }
 
     private void Start()
@@ -35,7 +26,6 @@ public class CanvasControl : MonoBehaviour
         _levelManager.OnLateWin += OnLevelWin;
         _levelManager.OnLateLost += OnLevelLost;
 
-     
         _canvasGroupes.Add(_panelMenu);
         _canvasGroupes.Add(_panelInGame);
         _canvasGroupes.Add(_panelWin);
@@ -47,13 +37,12 @@ public class CanvasControl : MonoBehaviour
         SwitchOnAllCanvasObjects();
         ActivateUIScreen(_panelMenu);
     }
-     
 
     private void OnDisable()
     {
-         _levelManager.OnLevelStart -= OnLevelStart;
+        _levelManager.OnLevelStart -= OnLevelStart;
         _levelManager.OnLateWin -= OnLevelWin;
-        _levelManager.OnLateLost -= OnLevelLost;       
+        _levelManager.OnLateLost -= OnLevelLost;
     }
 
     void SwitchOnAllCanvasObjects()
@@ -66,7 +55,7 @@ public class CanvasControl : MonoBehaviour
     private void OnLevelStart()
     {
         _levelManager.LevelPlay();
-              
+
         ActivateUIScreen(_panelInGame);
     }
 
@@ -81,7 +70,7 @@ public class CanvasControl : MonoBehaviour
         Debug.Log("Level Lost");
         ActivateUIScreen(_panelLost);
     }
-       
+
     public void LoadNextLevel()
     {
         _levelManager.LoadNextLevel();
@@ -109,6 +98,4 @@ public class CanvasControl : MonoBehaviour
             }
         }
     }
-
-
 }

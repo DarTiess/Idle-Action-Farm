@@ -63,8 +63,6 @@ public class LevelEventService : MonoBehaviour
         OnLateWin?.Invoke();
         Time.timeScale = 1;
     }
-
-
     public void LoadNextLevel()
     {
         LevelLoader.LoadNextLevel();
@@ -74,8 +72,6 @@ public class LevelEventService : MonoBehaviour
     {
         LevelLoader.RestartScene();
     }
-
-
     public void ClearProgress()
     {
         PlayerPrefs.DeleteAll();

@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -19,7 +18,6 @@ public class PlayerBlockStack : MonoBehaviour
     [SerializeField] private float _blockHeight;
     [SerializeField] private int _limitOfBlocks;
 
-
     private int _blockIndex = 0;
     private float _cutIndex = 0;
     private float _startBlockPosition;
@@ -27,7 +25,9 @@ public class PlayerBlockStack : MonoBehaviour
     private List<Block> _blocksInStack = new List<Block>();
     private bool _onSaling;
     private bool _isFullingStack;
+    private bool _stacking;
     private PlayerMoneyStack _moneyStack;
+    private Rigidbody _rb;
     private Economics _economics;
 
     [Inject]
@@ -38,10 +38,12 @@ public class PlayerBlockStack : MonoBehaviour
 
     private void Start()
     {
-        _moneyStack=GetComponent<PlayerMoneyStack>();
+        _moneyStack = GetComponent<PlayerMoneyStack>();
         _economics.MaxBlockSize = _limitOfBlocks;
         _moneyStack.CreateCoinsPull(_limitOfBlocks);
+        _rb = GetComponent<Rigidbody>();
         CreateBlocksPull();
+        CreateBlocksInStackPull();
     }
 
     private void CreateBlocksPull()
@@ -49,19 +51,41 @@ public class PlayerBlockStack : MonoBehaviour
         for (int i = 0; i < _limitOfBlocks; i++)
         {
             Block block = Instantiate(_blockPrefab, transform.position, transform.rotation);
+            block.InitBlockInScene();
+
             block.gameObject.SetActive(false);
             _blocks.Add(block);
-
         }
     }
 
+    private void CreateBlocksInStackPull()
+    {
+        _startBlockPosition += _blockHeight;
+
+        Block firstBlock = Instantiate(_blockPrefab, _blockPlace.transform.position, _blockPlace.rotation);
+
+        firstBlock.InitFirstBlockInStack(_blockPlace, _rb);
+        _blocksInStack.Add(firstBlock);
+
+        for (int i = 1; i < _limitOfBlocks; i++)
+        {
+            _startBlockPosition += _blockHeight;
+
+            Block block = Instantiate(_blockPrefab, new Vector3(_blockPlace.position.x, _startBlockPosition, _blockPlace.position.z), _blockPlace.rotation);
+            block.InitBlockInStack(_blockPlace, _blocksInStack[i - 1].Rigidbody);
+            _blocksInStack.Add(block);
+
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Block"))
         {
-            StackBlocks(other.gameObject.GetComponent<Block>());
+            if (!_stacking)
+            {
+                StackBlocks(other.gameObject.GetComponent<Block>());
+            }
         }
-      
     }
 
     private void OnTriggerStay(Collider other)
@@ -93,43 +117,41 @@ public class PlayerBlockStack : MonoBehaviour
             {
                 block.gameObject.SetActive(true);
 
-                int rnd = UnityEngine.Random.Range(-1, 1);
-                if (rnd == 0)
-                {
-                    rnd = 1;
-                }
-                float zPos = gameObject.transform.position.z + 3 * rnd;
+                Transform newPosition = grass;
+                newPosition.position = new Vector3(grass.position.x, grass.position.y + 1f, grass.position.z);
 
+                block.MoveToTarget(transform.position, newPosition, _jumpForce, _jumpDuretion);
                 block.transform.tag = "Block";
-               block.MoveToTarget(grass.position, grass, _jumpForce, _jumpDuretion);
 
                 _cutIndex = 0;
                 return;
             }
         }
-   
     }
 
     private void StackBlocks(Block block)
     {
-        _blocksInStack.Add(block);
+        _stacking = true;
         block.tag = "Untagged";
 
-
-        block.MoveToTarget(block.transform.position, _blockPlace, _jumpForce, _jumpDuretion);
         _economics.GetBlock(1);
 
-        block.transform.parent = _blockPlace.transform.parent;
-        _startBlockPosition += _blockHeight;
-       _blockPlace.transform.position= new Vector3(_blockPlace.position.x, _startBlockPosition, _blockPlace.position.z);
-       
-        _blockIndex++;
+        block.transform.DOJump(_blocksInStack[_blockIndex].transform.position, _jumpForce, 1, _jumpDuretion)
+       .OnComplete(() =>
+       {
+           block.gameObject.SetActive(false);
 
-        if (_blockIndex >= _limitOfBlocks)
-        {
-            _isFullingStack= true;
-            IsFull?.Invoke();
-        }
+           _blocksInStack[_blockIndex].GetComponent<MeshRenderer>().enabled = true;
+           _blockIndex++;
+
+           if (_blockIndex >= _limitOfBlocks)
+           {
+               _isFullingStack = true;
+               IsFull?.Invoke();
+           }
+           _stacking = false;
+       });
+
     }
     private void SaleBlocks(Transform storeHouse)
     {
@@ -138,29 +160,34 @@ public class PlayerBlockStack : MonoBehaviour
             return;
         }
         _onSaling = true;
-        Debug.Log("Storing blocks");
-        Block lastBlock = _blocksInStack[_blockIndex - 1];
+        Block lastBlock = null;
+        foreach (Block bl in _blocks)
+        {
+            if (!bl.gameObject.activeInHierarchy)
+            {
+                lastBlock = bl;
+                lastBlock.gameObject.SetActive(true);
+                lastBlock.transform.position = gameObject.transform.position;
+                break;
+            }
+        }
 
         lastBlock.transform.DOJump(storeHouse.position, _jumpForce, 1, _jumpDuretion)
         .OnComplete(() =>
         {
+            _blockIndex--;
             _onSaling = false;
             _moneyStack.PushCoinsToBank(storeHouse);
             lastBlock.transform.parent = null;
             lastBlock.transform.position = storeHouse.position;
             lastBlock.gameObject.SetActive(false);
-            _blocksInStack.Remove(lastBlock);
+            _blocksInStack[_blockIndex].SaleBlockFromStack();
 
-            _blockIndex--;
-            _startBlockPosition -= _blockHeight;
-            _blockPlace.transform.position = new Vector3(_blockPlace.position.x, _startBlockPosition, _blockPlace.position.z);
             if (_isFullingStack)
             {
                 _isFullingStack = false;
                 CanStacking?.Invoke();
             }
         });
-
     }
-
 }

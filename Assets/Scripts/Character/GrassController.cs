@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
-
 public class GrassController : MonoBehaviour
- {
-
+{
     [SerializeField] private List<GameObject> _grassPrefabs;
     [SerializeField] private int _grassNumber = 64;
     [SerializeField] private float _width;
@@ -19,7 +16,6 @@ public class GrassController : MonoBehaviour
         float groundWidthHalf = _width / 2;
         float groundDepthHalf = _depth / 2;
 
-        // Create some gras at random positions in given area
         for (int grassIndex = 0; grassIndex < _grassNumber; grassIndex++)
         {
             Vector3 position = transform.position + new Vector3(Random.Range(-groundWidthHalf, groundWidthHalf), 0, Random.Range(-groundDepthHalf, groundDepthHalf));
@@ -31,13 +27,4 @@ public class GrassController : MonoBehaviour
         gameObject.tag = "GrassPlace";
     }
 
-
-   /* private void Update() {
-        int interactionObjIndex = 0;
-        foreach (GameObject interactionObj in GameObject.FindGameObjectsWithTag(interactionTag)) {
-            grassInteractionPositions[interactionObjIndex++] = interactionObj.transform.position + new Vector3(0, 0.5f, 0);
-        }
-        Shader.SetGlobalFloat("_PositionArray", interactionObjIndex);
-       Shader.SetGlobalVectorArray("_Positions", grassInteractionPositions);
-    }*/
 }

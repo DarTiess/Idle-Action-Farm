@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -15,9 +13,9 @@ public class Melee : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-         if (other.gameObject.CompareTag("Grass"))
+        if (other.gameObject.CompareTag("Grass"))
         {
-           _playerStack.CreateBlockOfGrass(other.gameObject.transform);
+            _playerStack.CreateBlockOfGrass(other.gameObject.transform);
         }
     }
 }

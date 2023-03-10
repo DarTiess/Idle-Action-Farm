@@ -11,19 +11,16 @@ public class LevelLoader : ScriptableObject
         get { return PlayerPrefs.GetInt("NumOfScene"); }
         set { PlayerPrefs.SetInt("NumOfScene", value); }
     }
-
     public void StartGame()
     {
         LoadScene();
     }
-
     public void LoadNextLevel()
     {
         NumScene += 1;
 
         LoadScene();
     }
-
     public void LoadScene()
     {
         if (NumScene >= ScenesList.Count)
@@ -34,7 +31,6 @@ public class LevelLoader : ScriptableObject
 
         SceneManager.LoadScene(ScenesList[NumScene]);
     }
-
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
